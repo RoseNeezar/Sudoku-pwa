@@ -1,5 +1,5 @@
 import 'styled-components'
-import { Theme } from '../styles'
+import { Theme } from 'styles'
 
 type Themes = typeof Theme
 

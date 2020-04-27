@@ -1,8 +1,13 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+interface IProps {
+  active?: boolean
+}
+
+export const Container = styled.div<IProps>`
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ active, theme }) =>
+    active ? theme.colors.blue : theme.colors.white};
   border: solid 1px ${({ theme }) => theme.colors.black};
   cursor: pointer;
   display: flex;

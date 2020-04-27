@@ -1,3 +1,2 @@
-import * as ServiceW from "./service-worker/index";
-
-export { ServiceW };
+export * from './service-worker'
+export { default as configureStore } from './configure-store'
