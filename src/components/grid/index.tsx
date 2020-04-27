@@ -4,21 +4,23 @@ import Block from './block'
 import { useDispatch, useSelector } from 'react-redux'
 import { Dispatch, AnyAction } from 'redux'
 import { createGrid, IReducer, selectBlock, fillBlock } from 'reducers'
-import { INDEX, BLOCK_COORD, NUMBERS, N } from 'typings'
+import { INDEX, BLOCK_COORD, NUMBERS, N, GRID } from 'typings'
 import useMousetrap from 'react-hook-mousetrap'
 
 interface IState {
   selectedBlock?: BLOCK_COORD
   selectedValue: N
+  solvedGrid?: GRID
 }
 const Grid: FC = () => {
   const state = useSelector<IReducer, IState>(
-    ({ selectedBlock, workingGrid }) => ({
+    ({ selectedBlock, workingGrid, solvedGrid }) => ({
       selectedBlock,
       selectedValue:
         workingGrid && selectedBlock
           ? workingGrid[selectedBlock[0]][selectedBlock[1]]
           : 0,
+      solvedGrid,
     })
   )
   const dispatch = useDispatch<Dispatch<AnyAction>>()
@@ -83,9 +85,11 @@ const Grid: FC = () => {
   useMousetrap('up', moveUp)
   useMousetrap('left', moveLeft)
   useMousetrap('right', moveRight)
+
   useEffect(() => {
-    create()
-  }, [create])
+    if (!state.solvedGrid) create()
+  }, [create, state.solvedGrid])
+
   return (
     <Container data-cy="grid-container">
       {Children.toArray(
